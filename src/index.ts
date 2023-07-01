@@ -1,8 +1,9 @@
 import * as http from 'http';
-import { v4 as uuidv4 } from 'uuid';
+//import { v4 as uuidv4 } from 'uuid';
 import { get } from './responses/get';
+import { post } from './responses/post';
 
-interface User {
+export interface User {
   id: string;
   username: string;
   age: number;
@@ -43,7 +44,9 @@ const server = http.createServer((req, res) => {
     }
 
     case 'POST': {
-      if (url === '/api/users') {
+
+      post(req, res, url);
+     /*  if (url === '/api/users') {
         let body = '';
 
         req.on('data', (chunk) => {
@@ -76,7 +79,7 @@ const server = http.createServer((req, res) => {
         res.statusCode = 404;
         res.setHeader('Content-Type', 'application/json');
         res.end(JSON.stringify({ message: 'non existing resource' }));
-      }
+      } */
       break;
     }
 
