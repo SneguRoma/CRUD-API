@@ -1,7 +1,10 @@
 import * as http from 'http';
+import 'dotenv/config';
 //import { v4 as uuidv4 } from 'uuid';
 import { get } from './responses/get';
 import { post } from './responses/post';
+import { put } from './responses/put';
+import { remove } from './responses/remove';
 
 export interface User {
   id: string;
@@ -11,6 +14,7 @@ export interface User {
 }
 
 export const users: User[] = [];
+const port = process.env.PORT ?? 4000;
 
 const server = http.createServer((req, res) => {
   const { method, url } = req;
@@ -84,7 +88,8 @@ const server = http.createServer((req, res) => {
     }
 
     case 'PUT': {
-      if (url?.startsWith('/api/users/')) {
+      put(req, res, url);
+      /* if (url?.startsWith('/api/users/')) {
         const userId = url.split('/').pop();
 
         let body = '';
@@ -122,12 +127,13 @@ const server = http.createServer((req, res) => {
         res.statusCode = 404;
         res.setHeader('Content-Type', 'application/json');
         res.end(JSON.stringify({ message: 'non existing resource' }));
-      }
+      } */
       break;
     }
 
     case 'DELETE': {
-      if (url?.startsWith('/api/users/')) {
+      remove(res, url);
+      /* if (url?.startsWith('/api/users/')) {
         const userId = url.split('/').pop();
         const userIndex = users.findIndex((u) => u.id === userId);
 
@@ -145,7 +151,7 @@ const server = http.createServer((req, res) => {
         res.statusCode = 404;
         res.setHeader('Content-Type', 'application/json');
         res.end(JSON.stringify({ message: 'non existing resource' }));
-      }
+      } */
       break;
     }
 
@@ -158,6 +164,6 @@ const server = http.createServer((req, res) => {
   }
 });
 
-server.listen(3000, () => {
-  console.log('Server is running on port 3000');
+server.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
 });
