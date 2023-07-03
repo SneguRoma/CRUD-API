@@ -8,7 +8,7 @@
     "start:dev": "nodemon",
     "start:prod": "tsc && node --es-module-specifier-resolution=node dist/index.js",
     "start:multi": "npm run start:prod cluster",
-    "test": "jest .test/app.test.ts"
+    "test": "jest .tests/index.test.ts"
   },
   "repository": {
     "type": "git",

@@ -1,5 +1,6 @@
 import { ServerResponse } from "http";
 import { users } from "..";
+import { nonExRes, notFoundUser } from "./constants";
 
 export const get = (res: ServerResponse, url?: string) => {
   if (url === "/api/users") {
@@ -13,7 +14,7 @@ export const get = (res: ServerResponse, url?: string) => {
     if (!user) {
       res.statusCode = 404;
       res.setHeader("Content-Type", "application/json");
-      res.end(JSON.stringify({ message: "User not found" }));
+      res.end(JSON.stringify({ message: notFoundUser }));
     } else {
       res.statusCode = 200;
       res.setHeader("Content-Type", "application/json");
@@ -22,6 +23,6 @@ export const get = (res: ServerResponse, url?: string) => {
   } else {
     res.statusCode = 404;
     res.setHeader("Content-Type", "application/json");
-    res.end(JSON.stringify({ message: "non existing resource" }));
+    res.end(JSON.stringify({ message: nonExRes }));
   }
 };

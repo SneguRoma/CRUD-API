@@ -1,5 +1,6 @@
 import { ServerResponse, IncomingMessage } from "http";
 import { users } from "..";
+import { nonExRes, reqFields, notFoundUser, servErr } from "./constants";
 
 export const put = (
   req: IncomingMessage,
@@ -24,7 +25,7 @@ export const put = (
           res.setHeader("Content-Type", "application/json");
           res.end(
             JSON.stringify({
-              message: "Username, age and hobbies are required fields",
+              message: reqFields,
             })
           );
         } else {
@@ -33,7 +34,7 @@ export const put = (
           if (!user) {
             res.statusCode = 404;
             res.setHeader("Content-Type", "application/json");
-            res.end(JSON.stringify({ message: "User not found" }));
+            res.end(JSON.stringify({ message: notFoundUser }));
           } else {
             user.username = username;
             user.age = age;
@@ -47,12 +48,12 @@ export const put = (
       } catch {
         res.statusCode = 500;
         res.setHeader("Content-Type", "application/json");
-        res.end(JSON.stringify({ message: "Internal server error" }));
+        res.end(JSON.stringify({ message: servErr }));
       }
     });
   } else {
     res.statusCode = 404;
     res.setHeader("Content-Type", "application/json");
-    res.end(JSON.stringify({ message: "non existing resource" }));
+    res.end(JSON.stringify({ message: nonExRes }));
   }
 };

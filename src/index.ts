@@ -1,10 +1,11 @@
 import * as http from "http";
 import "dotenv/config";
-//import { v4 as uuidv4 } from 'uuid';
 import { get } from "./responses/get";
 import { post } from "./responses/post";
 import { put } from "./responses/put";
 import { remove } from "./responses/remove";
+import { nonExRes } from "./responses/constants";
+
 
 export interface User {
   id: string;
@@ -16,7 +17,7 @@ export interface User {
 export const users: User[] = [];
 const port = process.env.PORT ?? 4000;
 
-const server = http.createServer((req, res) => {
+export const server = http.createServer((req, res) => {
   const { method, url } = req;
 
   switch (method) {
@@ -47,7 +48,7 @@ const server = http.createServer((req, res) => {
     default: {
       res.statusCode = 404;
       res.setHeader("Content-Type", "application/json");
-      res.end(JSON.stringify({ message: "non existing resource" }));
+      res.end(JSON.stringify({ message: nonExRes }));
       break;
     }
   }

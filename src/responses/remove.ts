@@ -1,5 +1,6 @@
 import { ServerResponse } from "http";
 import { users } from "..";
+import { nonExRes, notFoundUser } from "./constants";
 
 export const remove = (res: ServerResponse, url?: string) => {
   if (url?.startsWith('/api/users/')) {
@@ -9,7 +10,7 @@ export const remove = (res: ServerResponse, url?: string) => {
     if (userIndex === -1) {
       res.statusCode = 404;
       res.setHeader('Content-Type', 'application/json');
-      res.end(JSON.stringify({ message: 'User not found' }));
+      res.end(JSON.stringify({ message: notFoundUser }));
     } else {
       users.splice(userIndex, 1);
 
@@ -19,6 +20,6 @@ export const remove = (res: ServerResponse, url?: string) => {
   } else {
     res.statusCode = 404;
     res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify({ message: 'non existing resource' }));
+    res.end(JSON.stringify({ message: nonExRes }));
   }
 };
